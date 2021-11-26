@@ -1,0 +1,13 @@
+on:
+  workflow_dispatch:
+jobs:
+  hello-my-actions:
+    runs-on: ubuntu-latest
+    name: Cloudtype Github Actions - Deploy
+    steps:
+      - name: checkout
+        uses: actions/checkout@v1
+      - name: deploy 
+        uses: ./
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}

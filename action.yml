@@ -1,0 +1,10 @@
+name: 'cloudtype-github-action-deploy'
+description: 'Cloudtype Github Actions - Deploy'
+author: 'Cloudtype, Inc.'
+inputs:
+  GITHUB_TOKEN:
+    description: 'GitHub token'
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
