@@ -1,13 +1,16 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
+import * as core from '@actions/core';
+import * as github from '@actions/github';
 
-(async () => {
+async function run(): Promise<void> {
   try {
     const githubToken = core.getInput('github-token');
     const octokit = github.getOctokit(githubToken);
 
     core.info(`GitHub Token is ${githubToken.length}`);
-  } catch (error) {
+    core.info('Done');
+  } catch (error: any) {
     core.setFailed(error.message);
   }
-})();
+}
+
+run();

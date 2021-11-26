@@ -2,17 +2,29 @@
   "name": "cloudtype-github-action-deploy",
   "version": "0.0.0",
   "description": "Cloudtype Github Actions - Deploy",
-  "main": "src/action.js",
+  "main": "dist/index.js",
+  "author": "Cloudtype Inc",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cloudtype-github-actions/deploy"
+  },
+  "keywords": [
+    "cloudtype"
+  ],
   "scripts": {
-    "build": "ncc build src/action.js --license LICENSE",
+    "build": "ncc build src/action.ts --license LICENSE",
     "dev": "npm run build && act workflow_dispatch -s GITHUB_TOKEN=$GHP_TOKEN",
+    "lint": "eslint . --ext .ts,.tsx",
+    "format": "prettier --write **/*.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "joje@cloudtype.co.kr",
-  "license": "Apache-2.0",
   "devDependencies": {
     "@actions/core": "^1.6.0",
     "@actions/github": "^5.0.0",
-    "@vercel/ncc": "^0.32.0"
+    "@vercel/ncc": "^0.32.0",
+    "prettier": "^2.5.0",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.2"
   }
 }

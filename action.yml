@@ -1,6 +1,6 @@
 name: 'cloudtype-github-action-deploy'
 description: 'Cloudtype Github Actions - Deploy'
-author: 'Cloudtype, Inc.'
+author: 'Cloudtype Inc'
 inputs:
   GITHUB_TOKEN:
     description: 'GitHub token'
