@@ -3,11 +3,36 @@ on:
 jobs:
   hello-my-actions:
     runs-on: ubuntu-latest
-    name: Cloudtype Github Actions - Deploy
+    name: Cloudtype Deploy
     steps:
       - name: checkout
         uses: actions/checkout@v1
-      - name: deploy 
+      - name: deploy
         uses: ./
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          endpoint: http://192.168.0.2:9009
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: test
+          stage: main
+          file: ./examples/myservice.yml
+          yaml_: |-
+            name: frontend
+            app: vite
+            options:
+              git:
+                branch: master
+                url: https://github.com/cloudtype/example-vite-vanilla.git
+              env:
+                - name: NODE_ENV
+                  value: production
+              install: yarn install --production=false
+              build: yarn build
+              docbase: /dist
+            ---
+            name: web
+            app: html
+            options:
+              git:
+                branch: master
+                url: https://github.com/cloudtype/example-html.git
+              docbase: /
