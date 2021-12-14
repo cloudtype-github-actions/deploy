@@ -1,5 +1,5 @@
 {
-  "name": "cloudtype-github-action-deploy",
+  "name": "cloudtype-github-actions-deploy",
   "version": "0.0.0",
   "description": "Cloudtype Github Actions - Deploy",
   "main": "dist/index.js",
@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "build": "ncc build src/action.ts --license LICENSE",
-    "dev": "npm run build && act workflow_dispatch -s CLOUDTYPE_TOKEN=$CLOUDTYPE_TOKEN",
+    "dev": "npm run build && act workflow_dispatch -s CLOUDTYPE_TOKEN=$CLOUDTYPE_TOKEN -s GITHUB_TOKEN=$GHP_TOKEN",
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier --write **/*.ts",
     "test": "echo \"Error: no test specified\" && exit 1"

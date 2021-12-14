@@ -7,32 +7,26 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v1
+      - name: Extract branch name
+        uses: vazco/github-actions-branch-name@v1
+        id: branch
+      - name: setup deploy key
+        uses: cloudtype-github-actions/deploykey@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          repo: ${{ github.repository }}
       - name: deploy
         uses: ./
         with:
-          endpoint: http://192.168.0.2:9009
           token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          value: ${{ github.ref_name }}
           project: test
           stage: main
-          file: ./examples/myservice.yml
-          yaml_: |-
-            name: frontend
-            app: vite
-            options:
-              git:
-                branch: master
-                url: https://github.com/cloudtype/example-vite-vanilla.git
-              env:
-                - name: NODE_ENV
-                  value: production
-              install: yarn install --production=false
-              build: yarn build
-              docbase: /dist
-            ---
-            name: web
+          yaml: |-
+            name: myproject
             app: html
             options:
               git:
-                branch: master
-                url: https://github.com/cloudtype/example-html.git
+                branch: ${{ steps.branch.outputs.branch_name }}
+                url: git@github.com:${{ github.repository }}.git
               docbase: /

@@ -12,8 +12,9 @@ async function run(): Promise<void> {
     const endpoint = core.getInput('endpoint');
     const target = core.getInput('project');
     const stagenames = core.getInput('stage');
+    const allstages = (core.getInput('allstages') || core.getInput('allStages')) === 'true' ? true : false;
     const file = core.getInput('file');
-    const jsoncontents = core.getInput('yaml');
+    const jsoncontents = core.getInput('json');
     const yamlcontents = core.getInput('yaml');
 
     if (!token) throw new Error(`variable token(cloudtype api token) is required`);
@@ -49,16 +50,15 @@ async function run(): Promise<void> {
     const formedtarget = ~target.indexOf('/') ? target : `/${target}`;
     const scopename = formedtarget.split('/')[0];
     const scope = scopename?.startsWith('@') ? scopename.substring(1) : scopename;
-    const project = formedtarget.split('/')[1];
-    const stages = stagenames?.split(',').map((v) => v.trim()) || ['$default'];
+    const projectname = formedtarget.split('/')[1];
+    const project = projectname.split(':')[0];
+    const stages = allstages ? null : stagenames?.split(',').map((v) => v.trim()) || [projectname.split(':')[1] || '$default'];
 
-    core.info(`token: ${token}`);
-    core.info(`scope: ${scope || '(your scope)'}`);
-    core.info(`project: ${project}`);
-    core.info(`stage: ${stages.join(',') || '(default stage)'}`);
+    core.info(`🚀 ${docs.length} description(s) will be deployed.`);
+    core.info(`👌 Target project is ${scope ? '@' + scope + '/' : ''}${project}`);
+    !allstages && core.info(` └ stage: ${stages ? stages.join(',') : '(main stage)'}`);
 
     // core.info(`payload is ${docs.map((doc: any) => yaml.stringify(doc)).join('---\n')}`);
-    core.info(`${docs.length} description(s) will be deployed.`);
 
     // const url = `${endpoint || 'https://api.cloudtype.io'}/project/${scope || '$user'}/${project}/stage/${stage || '$default'}/deployment`;
     // core.info(`url: ${url}`);
@@ -90,38 +90,11 @@ async function run(): Promise<void> {
     if (data.error) throw new Error(`${data.message}`);
 
     // core.info(`response: \n${yaml.stringify(data)}`);
-    core.info(`${data.length} apps deployed`);
-    core.info('Done.');
+    core.info(`🎉 ${data.length} apps deployed`);
+    core.info('✅ Success - deploy');
   } catch (error: any) {
     core.setFailed(error.message);
   }
 }
 
 run();
-
-/*
-put https://api.cloudtype.io/project/joje.attrs/test/stage/main/deployment
-
-{
-  "name": "html",
-  "resources": {
-    "cpu": 0.25,
-    "memory": 64,
-    "replicas": 1,
-    "volume": "250M"
-  },
-  "options": {
-    "git": {
-      "branch": "master",
-      "url": "https://github.com/cloudtype/example-html.git"
-    },
-    "docbase": "/",
-    "spa": false,
-    "indexpage": "index.html"
-  },
-  "app": "html@latest",
-  "labels": {
-    "app": "html@"
-  }
-}
-*/

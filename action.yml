@@ -1,10 +1,31 @@
-name: 'cloudtype-github-action-deploy'
-description: 'Cloudtype Github Actions - Deploy'
-author: 'Cloudtype Inc'
+name: Cloudtype Github Actions - Deploy
+author: Cloudtype Inc
+description: Deploy apps to Cloudtype.
 inputs:
-  CLOUDTYPE_TOKEN:
-    description: 'Cloudtype token'
+  token:
+    description: Cloudtype Access Token
     required: true
+  endpoint:
+    description: API Endpoint
+    required: false
+  project:
+    description: Project Name
+    required: false
+  stage:
+    description: Stage Name
+    required: false
+  allstages:
+    description: Deploy to All Stages
+    required: false
+  file:
+    description: Description File
+    required: false
+  json:
+    description: Description JSON Text
+    required: false
+  yaml:
+    description: Description Yaml Text
+    required: false
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: node12
+  main: dist/index.js
