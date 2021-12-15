@@ -7,9 +7,6 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v1
-      - name: Extract branch name
-        uses: vazco/github-actions-branch-name@v1
-        id: branch
       - name: setup deploy key
         uses: cloudtype-github-actions/deploykey@v1
         with:
@@ -23,10 +20,10 @@ jobs:
           project: test
           stage: main
           yaml: |-
-            name: myproject
+            name: myapp
             app: html
             options:
               git:
-                branch: ${{ steps.branch.outputs.branch_name }}
+                ref: ${{ github.ref }}
                 url: git@github.com:${{ github.repository }}.git
               docbase: /

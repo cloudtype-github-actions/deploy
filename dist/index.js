@@ -7240,7 +7240,6 @@ const json5_1 = __importDefault(__nccwpck_require__(904));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const value = core.getInput('value');
             const token = core.getInput('token');
             const endpoint = core.getInput('endpoint');
             const target = core.getInput('project');
@@ -7249,8 +7248,6 @@ function run() {
             const file = core.getInput('file');
             const jsoncontents = core.getInput('json');
             const yamlcontents = core.getInput('yaml');
-            core.info(`github.base_ref is ${value}`);
-            core.info(`yaml is ${yamlcontents}`);
             if (!token)
                 throw new Error(`variable token(cloudtype api token) is required`);
             if (!target)
