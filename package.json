@@ -2,7 +2,7 @@
   "name": "cloudtype-github-actions-deploy",
   "version": "0.0.0",
   "description": "Cloudtype Github Actions - Deploy",
-  "main": "dist/index.js",
+  "main": "lib/action.js",
   "author": "Cloudtype Inc",
   "license": "Apache-2.0",
   "repository": {
@@ -13,24 +13,25 @@
     "cloudtype"
   ],
   "scripts": {
-    "build": "ncc build src/action.ts --license LICENSE",
+    "build": "rimraf lib && tsc && rimraf dist && ncc build --source-map --license LICENSE",
     "dev": "npm run build && act workflow_dispatch -s CLOUDTYPE_TOKEN=$CLOUDTYPE_TOKEN -s GITHUB_TOKEN=$GHP_TOKEN",
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier --write **/*.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "devDependencies": {
+  "dependencies": {
     "@actions/core": "^1.6.0",
     "@actions/github": "^5.0.0",
+    "json5": "^2.2.0",
+    "node-fetch": "^2.6.6",
+    "yaml": "^1.10.2"
+  },
+  "devDependencies": {
     "@types/node": "^16.11.12",
     "@vercel/ncc": "^0.32.0",
     "prettier": "^2.5.0",
+    "rimraf": "^3.0.2",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.2"
-  },
-  "dependencies": {
-    "json5": "^2.2.0",
-    "node-fetch": "^3.1.0",
-    "yaml": "^1.10.2"
   }
 }
