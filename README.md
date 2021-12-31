@@ -10,7 +10,7 @@
 
 ## `token`
 
-**Required** 클라우드타입 API Key
+**필수** 클라우드타입 API Key
 
 ## `project`
 
