@@ -1,46 +1,46 @@
 # Cloudtype Github Actions - Deploy
 
-This action is provided to deploy applications to Cloudtype.
+이 액션은 소스코드를 클라우드타입으로 배포합니다.
 
 `cloudtype-github-actions/deploy@v1`
 
 
 
-## Inputs
+## 입력값(Inputs)
 
 ## `token`
 
-**Required** Cloudtype Access Token.
+**Required** 클라우드타입 API Key
 
 ## `project`
 
-Deployment target project name.
+배포할 프로젝트 이름
 
 ## `stage`
 
-Deployment target stage name. Default `main stage`.
+배포할 스테이지 이름. 기본값: 기본 스테이지로 설정된 스테이지
 
 ## `allStages`
 
-Deploy to all stages.
+Boolean / true 인 경우 모든 스테이로 배포
 
-#### One of the items below.
+#### 다음 입력값 중 한가지 필요
 
 ## `file`
 
-Deployment description file.
+배포 설정 파일
 
 ## `json`
 
-Deployment description json.
+배포 설정 json 문자열
 
 ## `yaml`
 
-Deployment description yaml.
+배포 설정 yaml 문자열
 
 ---
 
-## Example usage
+## 사용예제
 ```yaml
 uses: cloudtype-github-actions/deploy@v1
 with:
