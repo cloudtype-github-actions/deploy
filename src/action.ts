@@ -9,7 +9,7 @@ import json5 from 'json5';
 async function run(): Promise<void> {
   try {
     const token = core.getInput('token');
-    const endpoint = core.getInput('endpoint');
+    const endpoint = core.getInput('endpoint') || 'https://api.cloudtype.io';
     const target = core.getInput('project');
     const stagenames = core.getInput('stage');
     const allstages = (core.getInput('allstages') || core.getInput('allStages')) === 'true' ? true : false;
@@ -52,23 +52,28 @@ async function run(): Promise<void> {
     const scope = scopename?.startsWith('@') ? scopename.substring(1) : scopename;
     const projectname = formedtarget.split('/')[1];
     const project = projectname.split(':')[0];
-    const stages = allstages ? null : stagenames?.split(',').map((v) => v.trim()) || [projectname.split(':')[1] || '$default'];
+    const stages = (() => {
+      if (allstages) return null;
+      if (stagenames) return stagenames.split(',').map((v) => v.trim());
+      if (~projectname?.indexOf(':')) return [projectname.split(':')[1]];
+      return ['$default'];
+    })();
 
     core.info(`🚀 ${docs.length} description(s) will be deployed.`);
     core.info(`👌 Target project is ${scope ? '@' + scope + '/' : ''}${project}`);
-    !allstages && core.info(` └ stage: ${stages ? stages.join(',') : '(main stage)'}`);
+    !allstages && core.info(` └ stage: ${stages ? stages.join(',') : '(default stage)'}`);
 
     // core.info(`payload is ${docs.map((doc: any) => yaml.stringify(doc)).join('---\n')}`);
 
-    // const url = `${endpoint || 'https://api.cloudtype.io'}/project/${scope || '$user'}/${project}/stage/${stage || '$default'}/deployment`;
+    // const url = `${endpoint}/project/${scope || '$user'}/${project}/stage/${stage || '$default'}/deployment`;
     // core.info(`url: ${url}`);
-    const url = `${endpoint || 'https://api.cloudtype.io'}/project/${scope || '$user'}/${project}/deploy`;
+    const url = `${endpoint}/project/${scope || '$user'}/${project}/deploy`;
 
     const response = await fetch(url, {
       method: 'PUT',
       body: JSON.stringify({
         request: docs,
-        stages
+        stagenames: stages
       }),
       headers: {
         'Content-Type': 'application/json',

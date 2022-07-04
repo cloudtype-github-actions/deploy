@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "build": "rimraf lib && tsc && rimraf dist && ncc build --source-map --license LICENSE",
-    "dev": "npm run build && act workflow_dispatch -s CLOUDTYPE_TOKEN=$CLOUDTYPE_TOKEN -s GITHUB_TOKEN=$GHP_TOKEN",
+    "dev": "npm run build && act workflow_dispatch -s CLOUDTYPE_TOKEN=$CLOUDTYPE_TOKEN -s CLOUDTYPE_TOKEN_DEV=$CLOUDTYPE_TOKEN_DEV -s CLOUDTYPE_TOKEN_LOCAL=$CLOUDTYPE_TOKEN_LOCAL -s GITHUB_TOKEN=$GHP_TOKEN",
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier --write **/*.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
