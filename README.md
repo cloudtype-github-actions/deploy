@@ -2,7 +2,7 @@
 
 이 액션은 소스코드를 클라우드타입으로 배포합니다.
 
-`cloudtype-github-actions/deploy@v1`
+`cloudtype-github-actions/deploy@v2`
 
 
 
@@ -42,7 +42,7 @@ Boolean / true 인 경우 모든 스테이로 배포
 
 ## 사용예제
 ```yaml
-uses: cloudtype-github-actions/deploy@v1
+uses: cloudtype-github-actions/deploy@v2
 with:
   token: ${{ secrets.CLOUDTYPE_TOKEN }}
   project: myproject
